@@ -1,6 +1,6 @@
 # DCHunter v1.0
 
-DCHunter is a reconnaissance tool to identify potential Domain Controllers in a subnet using enum4linux.This is pre-requisite is installed if you do not already have it. 
+DCHunter is a reconnaissance tool to identify potential Domain Controllers in a subnet using enum4linux.This pre-requisite is installed if you do not already have it. 
 
 ## Features
 - Identifies potential Domain Controllers in a specified subnet.
