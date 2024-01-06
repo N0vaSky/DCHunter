@@ -79,11 +79,12 @@ for ip in {1..254}; do
             # Extract domain controller name
             dc_name=$(echo "$enum_output" | grep -oP '^\s*Domain\s*:\s*\K.{1,50}' | tr -d '\r')
             
-            echo -e "\nFound Domain Controller! :D"
+            echo -e "\nFound Domain Controller!"
             echo "Domain Controller IP: $target_ip"
             
-            # Pause and ask for key press before showing Domain Controller information
-            read -n 1 -s -r -p "Press any key to show Domain Controller information..."
+            # Pause for 7 seconds
+            echo -e "\nHere's all the info..."
+            sleep 5
             
             # Display the output of enum4linux
             echo -e "\n=== Domain Controller Information ===\n"
