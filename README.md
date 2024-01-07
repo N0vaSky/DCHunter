@@ -1,22 +1,24 @@
 # DCHunter v1.0
 
-DCHunter is a reconnaissance tool to identify potential Domain Controllers in a subnet using enum4linux. This pre-requisite is installed if you do not already have it. 
+This script helps identify potential Domain Controllers in a given CIDR subnet or a single IP address. It uses Nmap to scan for common Domain Controller ports and performs NetBIOS name lookup on discovered hosts.
 
-## Features
-- Identifies potential Domain Controllers in a specified subnet.
-- Displays Domain Controller information including the domain name.
+## Prerequisites
+
+Ensure that the following tools are installed on your system:
+
+- [Nmap](https://nmap.org/)
+- [nmblookup](https://linux.die.net/man/1/nmblookup)
+
+Install any missing tools before running the script.
 
 ## Usage
-1. **Clone the repository:**
+
+1. Clone the repository:
+
    ```bash
+   git clone https://github.com/JoshTStrickland/dchunter.git
+   cd dchunter
+   sudo ./dchunter.sh
 
-    git clone https://github.com/your-username/DCHunter.git
+- Happy hacking :)
 
-2. **Execute Script:**
-   ```bash
-     cd DCHunter
-   
-     sudo ./dchunter.sh
-- Enter the subnet in CIDR notation when prompted.
-
-- Find Domain Controllers :)
