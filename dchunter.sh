@@ -29,36 +29,35 @@ if [[ "${#missing_tools[@]}" -gt 0 ]]; then
     exit 1
 fi
 
-# Function to validate CIDR notation or single IP address
-validate_input() {
-    local input="$1"
-    local cidr_regex="^([0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}$"
-    local ip_regex="^([0-9]{1,3}\.){3}[0-9]{1,3}$"
-
-    if [[ ! $input =~ $cidr_regex && ! $input =~ $ip_regex ]]; then
-        # Verbose comment for invalid input
-        echo -e "${RED}Invalid input. Please enter a valid CIDR range (e.g., 10.0.0.0/24) or a single IP address.${RESET}"
+# Function to validate CIDR notation
+validate_cidr() {
+    local cidr="$1"
+    local regex="^([0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{1,2}$"
+    
+    if [[ ! $cidr =~ $regex ]]; then
+        # Verbose comment for invalid CIDR notation
+        echo -e "${RED}Invalid CIDR notation. Please enter a valid CIDR range (e.g., 10.0.0.0/24).${RESET}"
         exit 1
     fi
 }
 
-read -p "Enter the CIDR subnet or a single IP address: " input
+read -p "Enter the CIDR subnet or a single IP (e.g., 10.0.0.0/24 or 10.0.0.2): " subnet
 
-# Validate input
-validate_input "$input"
+# Validate CIDR notation
+validate_cidr "$subnet"
 
 # Task 1: Scan for potential Domain Controllers
 echo -e "\n${CYAN}Task 1: Scanning for potential Domain Controllers in the subnet...${RESET}"
-nmap_command="sudo nmap -p 88,389,636 --open --script nbstat -oG - $input"
-echo -e "${RED}Running: $nmap_command${RESET}"
+nmap_command="sudo nmap -p 88,389,636 --open --script nbstat -oG - $subnet"
+echo -e "${YELLOW}Running: $nmap_command${RESET}"
 nmap_output=$(eval "$nmap_command")
 
 # Display Task 1 output
 echo -e "\n${CYAN}=== Task 1 Output ===${RESET}\n"
 while IFS= read -r line; do
     if [[ "$line" =~ "Host:" || "$line" =~ "Ports:" ]]; then
-        # Highlight important lines in red
-        echo -e "${RED}$line${RESET}"
+        # Highlight important lines in yellow
+        echo -e "${YELLOW}$line${RESET}"
     else
         echo -e "$line"
     fi
@@ -91,3 +90,7 @@ done <<< "$nmap_output"
 
 # Verbose comment for script completion
 echo -e "\n${GREEN}Script completed.${RESET}"
+
+# Move the script to /usr/local/bin and make it executable
+sudo mv "$0" /usr/local/bin/dchunter
+sudo chmod +x /usr/local/bin/dchunter
