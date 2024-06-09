@@ -16,7 +16,7 @@ Install any missing tools before running the script.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/JoshTStrickland/dchunter.git
+   git clone https://github.com/N0vaSky/dchunter.git
    cd dchunter
    sudo ./dchunter.sh
 
